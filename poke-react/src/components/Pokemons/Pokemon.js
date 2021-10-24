@@ -3,15 +3,15 @@ import useGet from "./../../utils/useHttp";
 import Loading from "./../Loading/Loading";
 
 const Pokemon = ({ name, url }) => {
-  const [pokemon, isLoading] = useGet({
+  const [pokemon, isLoading, error] = useGet({
     url: url,
   });
   return (
     <div className="col-4 mt-3" key={name}>
       <div className="card">
-        {isLoading ? (
+        {isLoading && !error ? (
           <Loading />
-        ) : (
+        ) : ( !error ? (
           <>
             <img
               src={pokemon.sprites.front_default}
@@ -24,7 +24,9 @@ const Pokemon = ({ name, url }) => {
                 Tipo: {pokemon.types.map((type) => type.type.name)}
               </p>
             </div>
-          </>
+          </>) : (
+            <h3>Este Pokemón no fue encontrado</h3>
+          )
         )}
       </div>
     </div>

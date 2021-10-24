@@ -4,19 +4,16 @@ import Pokemon from "./Pokemon";
 import Loading from "./../Loading/Loading";
 
 const Pokemons = () => {
-  const [pokemons, isLoading] = useGet({
+  const [pokemons, isLoading, error] = useGet({
     url: "https://pokeapi.co/api/v2/pokemon",
   });
   return (
     <>
       <div className="container">
         <div className="row">
-          <div className="col-12">
-            <h1 className="text-center text-info">Pokemon</h1>
-          </div>
           {isLoading ? (
             <Loading />
-          ) : (
+          ) : ( !error &&
             pokemons.results.map((pokemon) => (
               <Pokemon key={pokemon.name} {...pokemon} />
             ))
